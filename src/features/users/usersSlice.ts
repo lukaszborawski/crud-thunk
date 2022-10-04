@@ -11,7 +11,7 @@ export const fetchUsers = createAsyncThunk('users/fetchUsers', async () => {
   return response.data
 })
 
-type User = {
+interface User {
   id: number;
   name: string;
 }
@@ -31,22 +31,7 @@ const initialState = {
 const usersSlice = createSlice({
   name: 'users',
   initialState,
-  reducers: {
-    userAdd(state, action) {
-      state.entities.push(action.payload);
-    },
-    userEdit(state, action) {
-      const { id, name } = action.payload;
-      const selectedUser = state.entities.find((user) => user.id === id);
-      if (selectedUser) {
-        selectedUser.name = name;
-      }
-    },
-    userDelete(state, action) {
-      const { id } = action.payload;
-      state.entities = state.entities.filter(user => user.id !== id)
-    }
-  },
+  reducers: {},
   extraReducers(builder) {
     builder.addCase(fetchUsers.fulfilled, (state, action: PayloadAction<User[]>) => {
       state.entities = action.payload
@@ -55,7 +40,5 @@ const usersSlice = createSlice({
 })
 
 export const selectAllUsers = (state: RootState) => state.users.entities;
-
-export const { userAdd, userEdit, userDelete } = usersSlice.actions;
 
 export default usersSlice.reducer

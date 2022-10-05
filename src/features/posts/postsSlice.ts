@@ -56,7 +56,7 @@ const postsSlice = createSlice({
   }
 })
 
-export const selectAllUsers = (state: RootState) => state.users.entities;
+export const selectAllPosts = (state: RootState) => state.posts.entities;
 
 export const { postAdd, postEdit, postDelete } = postsSlice.actions;
 

@@ -13,6 +13,7 @@ const UsersList = () => {
         ({ id, name }) => (
           <UserCard
             key={id}
+            id={id}
             name={name}
           />
         )

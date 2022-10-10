@@ -13,6 +13,7 @@ export const fetchPosts = createAsyncThunk('posts/fetchPosts', async () => {
 
 interface Post {
   id: number;
+  userId: number;
   title: string;
   body: string;
 }

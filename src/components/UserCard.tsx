@@ -1,18 +1,21 @@
-import React from 'react';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
 interface UserProfile {
+  id: number;
   name: string;
 }
 
-const UserCard = ({ name }: UserProfile) => {
+const UserCard = ({ id, name }: UserProfile) => {
   return (
-    <Wrapper>
-      <Detail>
-        Name:
-        <Value>{name}</Value>
-      </Detail>
-    </Wrapper>
+    <Link to={`/user/${id}`}>
+      <Wrapper>
+        <Detail>
+          Name:
+          <Value>{name}</Value>
+        </Detail>
+      </Wrapper>
+    </Link>
   )
 }
 

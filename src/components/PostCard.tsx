@@ -7,10 +7,10 @@ interface PostProfile {
 
 const PostCard = ({ id, title }: PostProfile) => {
   return (
-      <Wrapper>
-          <Value>{title}</Value>
-      </Wrapper>
-    
+    <Wrapper>
+      <Value>{title}</Value>
+    </Wrapper>
+
   )
 }
 

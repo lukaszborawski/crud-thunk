@@ -32,5 +32,6 @@ const Detail = styled.div`
 `;
 
 const Value = styled.span`
+  margin-left: 5px;
 `;
 

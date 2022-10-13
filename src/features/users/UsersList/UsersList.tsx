@@ -1,3 +1,4 @@
+import styled from 'styled-components';
 import { useAppSelector } from '../../../store/typedHooks'
 import { selectAllUsers } from '../usersSlice';
 import UserCard from '../../../components/UserCard';
@@ -8,7 +9,7 @@ const UsersList = () => {
 
 
   return (
-    <div>
+    <Wrapper>
       {users.map(
         ({ id, name }) => (
           <UserCard
@@ -19,8 +20,15 @@ const UsersList = () => {
         )
       )
       }
-    </div>
+    </Wrapper>
   )
 }
 
 export default UsersList
+
+const Wrapper = styled.main`
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+  justify-items: center;
+  gap: 20px;
+`;

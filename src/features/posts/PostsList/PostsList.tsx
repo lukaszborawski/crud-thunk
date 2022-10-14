@@ -1,3 +1,4 @@
+import { useState } from "react";
 import styled from "styled-components";
 import { selectAllPosts } from "../postsSlice";
 import { useAppSelector } from "../../../store/typedHooks";
@@ -5,18 +6,20 @@ import { useParams } from "react-router-dom";
 import PostCard from "../../../components/PostCard";
 import { useAppDispatch } from "../../../store/typedHooks";
 import { postDelete } from "../postsSlice";
+import Modal from "../../../components/Modal";
 
 const PostsList = () => {
 
   const { id } = useParams();
   const dispatch = useAppDispatch();
   const posts = useAppSelector(selectAllPosts);
+
   const postsByUser = posts.filter(post => post.userId === Number(id));
+  const [showModal, setShowModal] = useState<boolean>(false);
 
   const handleDelete = (id: number) => {
     dispatch(postDelete({ id }));
   };
-
 
   return (
     <Wrapper>
@@ -33,6 +36,9 @@ const PostsList = () => {
         )
       )
       }
+      <Modal showModal={showModal} setShowModal={setShowModal}>
+
+      </Modal>
     </Wrapper>
   )
 }

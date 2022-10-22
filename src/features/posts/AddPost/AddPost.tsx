@@ -1,17 +1,17 @@
 import { useState, ChangeEvent } from "react";
 import { nanoid } from '@reduxjs/toolkit';
-import { useParams } from 'react-router-dom'
-import Modal from "../../../components/Modal"
+import { useParams, useNavigate } from 'react-router-dom';
+import Modal from "../../../components/Modal";
 import { useAppDispatch } from "../../../store/typedHooks";
 import { postAdd } from "../postsSlice";
 
 const AddPost = () => {
 
-  const { id } = useParams()
+  const { id } = useParams();
+  const navigate = useNavigate();
   const dispatch = useAppDispatch();
 
-  const [showModal, setShowModal] = useState(true);
-  const [title, setTitle] = useState('')
+  const [title, setTitle] = useState('');
 
   const onTitleChanged = (e: ChangeEvent<HTMLInputElement>) => setTitle(e.target.value)
 
@@ -26,11 +26,11 @@ const AddPost = () => {
       })
     );
     setTitle("");
-    setShowModal(false);
+    navigate(-1)
   };
 
   return (
-    <Modal showModal={showModal} setShowModal={setShowModal}>
+    <Modal>
       <form>
         <label htmlFor="titlePost">Title:</label>
         <input

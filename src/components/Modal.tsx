@@ -1,22 +1,19 @@
 import styled from "styled-components";
 
 interface ModalProps {
-  showModal: boolean,
-  setShowModal: (show: boolean) => void;
   children: React.ReactNode
 }
 
-const Modal = ({ children, showModal, setShowModal }: ModalProps) => {
+const Modal = ({ children }: ModalProps) => {
 
   return (
     <>
-      {showModal && (
-        <Backdrop>
-          <ModalBackground>
-            {children}
-          </ModalBackground>
-        </Backdrop>
-      )}
+      <Backdrop>
+        <ModalBackground>
+          {children}
+        </ModalBackground>
+      </Backdrop>
+
     </>
   )
 }

@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { useAppSelector } from '../../../store/typedHooks'
+import { useAppSelector } from '../../../store/typedHooks';
 import { selectAllUsers } from '../usersSlice';
 import UserCard from '../../../components/UserCard';
 

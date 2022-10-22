@@ -1,12 +1,9 @@
-import { useState } from "react";
 import styled from "styled-components";
-import { selectAllPosts } from "../postsSlice";
-import { useAppSelector } from "../../../store/typedHooks";
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
+import { selectAllPosts, postDelete } from "../postsSlice";
+import { useAppSelector, useAppDispatch } from "../../../store/typedHooks";
 import PostCard from "../../../components/PostCard";
-import { useAppDispatch } from "../../../store/typedHooks";
-import { postDelete } from "../postsSlice";
-import Modal from "../../../components/Modal";
+
 
 const PostsList = () => {
 
@@ -15,7 +12,6 @@ const PostsList = () => {
   const posts = useAppSelector(selectAllPosts);
 
   const postsByUser = posts.filter(post => post.userId === Number(id));
-  const [showModal, setShowModal] = useState<boolean>(false);
 
   const handleDelete = (id: number) => {
     dispatch(postDelete({ id }));
@@ -23,22 +19,24 @@ const PostsList = () => {
 
   return (
     <Wrapper>
+      <Link to={`/addPost/${id}`}>
+        <button>Add Post</button>
+      </Link>
       {postsByUser.map(
         ({ id, title }) => (
-          <>
+          <div key={id}>
             <PostCard
-              key={id}
               id={id}
               title={title}
             />
             <button onClick={() => handleDelete(id)}>delete</button>
-          </>
+            <Link to={`/editPost/${id}`}>
+              <button>edit</button>
+            </Link>
+          </div>
         )
       )
       }
-      <Modal showModal={showModal} setShowModal={setShowModal}>
-
-      </Modal>
     </Wrapper>
   )
 }

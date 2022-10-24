@@ -1,9 +1,8 @@
 import { useState, ChangeEvent } from "react";
-import { nanoid } from '@reduxjs/toolkit';
 import { useParams, useNavigate } from 'react-router-dom';
 import Modal from "../../../components/Modal";
-import { useAppDispatch } from "../../../store/typedHooks";
-import { postAdd } from "../postsSlice";
+import { useAppDispatch, useAppSelector } from "../../../store/typedHooks";
+import { postAdd, selectAllPosts } from "../postsSlice";
 
 const AddPost = () => {
 
@@ -11,18 +10,21 @@ const AddPost = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
 
+  const posts = useAppSelector(selectAllPosts);
+
+  const postsAmount = posts.filter(post => post.userId === Number(id)).length;
+
   const [title, setTitle] = useState('');
 
-  const onTitleChanged = (e: ChangeEvent<HTMLInputElement>) => setTitle(e.target.value)
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => setTitle(e.target.value)
 
 
   const handleAdd = () => {
     dispatch(
       postAdd({
         userId: Number(id),
-        id: nanoid(),
+        id: postsAmount + 1,
         title,
-
       })
     );
     setTitle("");
@@ -38,7 +40,7 @@ const AddPost = () => {
           id="titlePost"
           name="titlePost"
           value={title}
-          onChange={onTitleChanged}
+          onChange={handleChange}
         />
         <button
           type="button"
@@ -47,7 +49,6 @@ const AddPost = () => {
           Save
         </button>
       </form>
-
     </Modal>
   )
 }

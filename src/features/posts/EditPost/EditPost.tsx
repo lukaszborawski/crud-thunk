@@ -16,14 +16,16 @@ const EditPost = () => {
 
 
   const handleEdit = () => {
-    dispatch(
-      postEdit({
-        id: Number(postId),
-        title,
-      })
-    );
-    setTitle("");
-    navigate(-1)
+    if (title) {
+      dispatch(
+        postEdit({
+          id: Number(postId),
+          title,
+        })
+      );
+      setTitle("");
+      navigate(-1)
+    }
   };
 
 

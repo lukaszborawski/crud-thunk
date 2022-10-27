@@ -1,16 +1,16 @@
 import styled from 'styled-components';
 import { useAppSelector } from '../../../store/typedHooks';
-import { selectAllUsers } from '../usersSlice';
 import UserCard from '../../../components/UserCard';
+import { RootState } from '../../../store/store';
 
 const UsersList = () => {
 
-  const users = useAppSelector(selectAllUsers);
+  const { data } = useAppSelector((state: RootState) => state.users);
 
 
   return (
     <Wrapper>
-      {users.map(
+      {data.map(
         ({ id, name }) => (
           <UserCard
             key={id}

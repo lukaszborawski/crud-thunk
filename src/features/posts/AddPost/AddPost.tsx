@@ -39,6 +39,7 @@ const AddPost = () => {
           name="titlePost"
           value={title}
           onChange={handleChange}
+          autoFocus
         />
         <button
           type="button"

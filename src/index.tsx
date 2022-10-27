@@ -4,8 +4,8 @@ import App from './App';
 import { store } from './store/store';
 import { Provider } from 'react-redux';
 
-import { fetchUsers } from './features/users/usersSlice'
-import { fetchPosts} from './features/posts/postsSlice'
+import { fetchUsers } from './features/users/usersSlice';
+import { fetchPosts} from './features/posts/postsSlice';
 
 store.dispatch(fetchUsers());
 store.dispatch(fetchPosts());

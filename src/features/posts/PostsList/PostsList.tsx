@@ -1,17 +1,18 @@
 import styled from "styled-components";
 import { useParams, Link } from "react-router-dom";
-import { selectAllPosts, postDelete } from "../postsSlice";
+import { postDelete } from "../postsSlice";
 import { useAppSelector, useAppDispatch } from "../../../store/typedHooks";
 import PostCard from "../../../components/PostCard";
+import { RootState } from "../../../store/store";
 
 
 const PostsList = () => {
 
   const { id } = useParams();
   const dispatch = useAppDispatch();
-  const posts = useAppSelector(selectAllPosts);
+  const { data } = useAppSelector((state: RootState) => state.posts);
 
-  const postsByUser = posts.filter(post => post.userId === Number(id));
+  const postsByUser = data.filter(post => post.userId === Number(id));
 
   const handleDelete = (id: number) => {
     dispatch(postDelete({ id }));

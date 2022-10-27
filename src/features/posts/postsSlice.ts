@@ -1,8 +1,6 @@
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
 import axios from 'axios';
 
-import { RootState } from '../../store/store';
-
 
 const POSTS_URL = 'https://jsonplaceholder.typicode.com/posts';
 
@@ -20,14 +18,14 @@ interface Post {
 
 interface PostState {
   loading: boolean;
-  error: string | null;
-  entities: Post[];
+  error: boolean;
+  data: Post[];
 }
 
 const initialState = {
   loading: false,
-  error: null,
-  entities: [],
+  error: false,
+  data: [],
 } as PostState;
 
 const postsSlice = createSlice({
@@ -35,11 +33,11 @@ const postsSlice = createSlice({
   initialState,
   reducers: {
     postAdd(state, action) {
-      state.entities.push(action.payload);
+      state.data.push(action.payload);
     },
     postEdit(state, action) {
       const { id, title, body } = action.payload;
-      const selectedPost = state.entities.find((post) => post.id === id);
+      const selectedPost = state.data.find((post) => post.id === id);
       if (selectedPost) {
         selectedPost.title = title;
         selectedPost.body = body;
@@ -47,17 +45,22 @@ const postsSlice = createSlice({
     },
     postDelete(state, action) {
       const { id } = action.payload;
-      state.entities = state.entities.filter(post => post.id !== id)
+      state.data = state.data.filter(post => post.id !== id)
     }
   },
   extraReducers(builder) {
-    builder.addCase(fetchPosts.fulfilled, (state, action: PayloadAction<Post[]>) => {
-      state.entities = action.payload
-    })
+    builder
+      .addCase(fetchPosts.pending, state => {
+        state.loading = true;
+      })
+      .addCase(fetchPosts.fulfilled, (state, action: PayloadAction<Post[]>) => {
+        state.data = action.payload
+      })
+      .addCase(fetchPosts.rejected, state => {
+        state.error = true;
+      })
   }
 })
-
-export const selectAllPosts = (state: RootState) => state.posts.entities;
 
 export const { postAdd, postEdit, postDelete } = postsSlice.actions;
 

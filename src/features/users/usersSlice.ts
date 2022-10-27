@@ -1,8 +1,6 @@
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
 import axios from 'axios';
 
-import { RootState } from '../../store/store';
-
 
 const USERS_URL = 'https://jsonplaceholder.typicode.com/users';
 
@@ -18,14 +16,14 @@ interface User {
 
 interface UserState {
   loading: boolean;
-  error: string | null;
-  entities: User[];
+  error: boolean;
+  data: User[];
 }
 
 const initialState = {
   loading: false,
-  error: null,
-  entities: [],
+  error: false,
+  data: [],
 } as UserState;
 
 const usersSlice = createSlice({
@@ -33,12 +31,19 @@ const usersSlice = createSlice({
   initialState,
   reducers: {},
   extraReducers(builder) {
-    builder.addCase(fetchUsers.fulfilled, (state, action: PayloadAction<User[]>) => {
-      state.entities = action.payload
-    })
+    builder
+      .addCase(fetchUsers.pending, state => {
+        state.loading = true;
+      })
+      .addCase(fetchUsers.fulfilled, (state, action: PayloadAction<User[]>) => {
+        state.loading = false;
+        state.data = action.payload;
+      })
+      .addCase(fetchUsers.rejected, state => {
+        state.error = true;
+      })
   }
 })
 
-export const selectAllUsers = (state: RootState) => state.users.entities;
 
 export default usersSlice.reducer
